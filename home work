@@ -1,0 +1,164 @@
+#include<iostream>
+using namespace std;
+struct node{
+    int data;
+    node *next;
+}*head;
+void deletenode()
+{
+    if(head==NULL)
+        return;
+    node *temp=head;
+    head=head->next;
+    free(temp);
+}
+void print()
+{
+    node *temp=head;
+    while(temp)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+void swap_node(int i)
+{
+    int n=0;
+    node *temp=head;
+    while(temp)
+    {
+        n++;
+        temp=temp->next;
+    }
+    if(i==n-i)
+        return;
+     temp=head;
+     if(i==1)
+     {
+         i=n-i;
+         while(--i)
+         temp=temp->next;
+         node *c=temp->next;
+         node *ptr=head->next;
+         temp->next=head;
+         temp->next->next=c;
+         head=temp->next;
+         head->next=ptr;
+     }
+     else{
+     int c=i;
+     while(--i)
+        temp->next;
+     node *ptr=head;
+     i=n-c;
+     while(--i)
+        ptr=ptr->next;
+    node *ptr1=ptr->next,*ptr2=temp->next;
+    ptr->next=temp->next;
+    temp->next=ptr1;
+    ptr2->next=ptr1;
+    ptr->next=ptr2;}
+    print();
+}
+void reverse_node()
+{
+    node*temp=head;
+    node *ptr=NULL;
+    while(temp)
+    {
+       node *c=temp->next;
+       temp->next=ptr;
+       ptr=temp;
+       temp=c;
+    }
+    while(ptr)
+    {
+        cout<<ptr->data<<" ";
+        ptr=ptr->next;
+    }
+  /*  if(head!=NULL)
+    {
+        reverse_node(head->next);
+        head->next->next=head;
+    }
+    else return;*/
+    print();
+}
+int main()
+{
+    int p;
+    head=new node;
+    cout<<"Enter data of node\n";
+    node *temp=head;
+    for(int i=0;i<10;i++)
+    {
+        int k;
+        cin>>k;
+        node *a=new node;
+        a->data=k;
+        a->next=NULL;
+        temp->next=a;
+        temp=temp->next;
+    }
+    head=head->next;
+    print();
+    cout<<"\nEnter data to insert at first position\n";
+    cin>>p;
+    node *a=new node;
+    a->data=p;
+    a->next=head;
+    head=a;
+    print();
+    cout<<"\nEnter data to insert at last position\n";
+    cin>>p;
+    node *b=new node;
+    b->data=p;
+    temp=head;
+    p=0;
+    while(temp->next)
+    {
+        temp=temp->next;
+        p++;
+    }
+    temp->next=b;
+    b->next=NULL;
+    print();
+    cout<<"\nEnter data to insert at mid\n";
+    p=p+1;
+    int k=p;
+    temp=head;
+    cin>>p;
+    k=(k-1)/2;
+    while(k--)
+    {
+        temp=temp->next;
+    }
+    node*c=new node;
+    c->data=p;
+    c->next=temp->next->next;
+    temp->next=c;
+    print();
+    deletenode();
+    //swap i th and n-i node
+     temp=head;
+     c=0;
+    cout<<"\nEnter value to swap i th and n-i th node\n";
+    cin>>p;
+     swap_node(p);
+     cout<<"\nreverse of following list\n";
+     reverse_node();
+     cout<<" enter a no. to search in list\n";
+     temp=head;
+     cin>>p;
+     while(temp)
+     {
+         if(temp->data==p)
+         {
+             cout<<"found\n";
+             break;
+         }
+         temp=temp->next;
+     }
+     if(!temp)
+        cout<<"Not found";
+}
